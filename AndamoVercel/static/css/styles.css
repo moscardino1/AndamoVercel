@@ -23,41 +23,34 @@ body {
     color: var(--text-color);
 }
 
-.main-nav {
+.main-nav, .filters {
     position: fixed;
-    top: 0;
     width: 100%;
-    height: var(--nav-height);
     padding: 0 2rem;
-    background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 999;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: rgba(10, 10, 10, 0.95);
+}
+
+.main-nav {
+    top: 0;
+    height: var(--nav-height);
+}
+
+.filters {
+    top: var(--nav-height);
+    height: var(--filters-height);
+    gap: 1rem;
+    flex-wrap: nowrap;
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--accent-color);
-}
-
-.filters {
-    position: fixed;
-    top: var(--nav-height);
-    width: 100%;
-    height: var(--filters-height);
-    padding: 0 2rem;
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    box-sizing: border-box;
 }
 
 .filters input,
@@ -67,9 +60,7 @@ body {
     border: 1px solid #333;
     color: var(--text-color);
     border-radius: 4px;
-    min-width: 150px;
-    max-width: 300px;
-    box-sizing: border-box;
+    width: 100%;
 }
 
 .filters input:focus,
@@ -167,7 +158,6 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: var(--footer-height);
 }
 
 .footer-link {
@@ -183,6 +173,7 @@ body {
     gap: var(--content-padding);
     height: calc(100vh - var(--nav-height) - var(--filters-height) - var(--footer-height));
     padding: var(--content-padding);
+    margin-top: calc(var(--nav-height) + var(--filters-height));
 }
 
 #map {
@@ -204,63 +195,3 @@ body {
         backdrop-filter: blur(10px);
     }
 }
-
-.content {
-    margin-top: calc(var(--nav-height) + var(--filters-height));
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: var(--content-padding);
-    padding: var(--content-padding);
-    height: calc(100vh - var(--nav-height) - var(--filters-height) - var(--footer-height));
-}
-
-#map {
-    height: 50vh;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.locations-list {
-    max-height: 500px;
-    overflow-y: auto;
-    padding: 1rem;
-    margin-top: 20px;
-}
-
-/* Updated filter section for responsiveness */
-.filters {
-    position: fixed;
-    top: var(--nav-height);
-    width: 100%;
-    height: var(--filters-height);
-    padding: 0 2rem;
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 999;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.filters input,
-.filters select {
-    padding: 8px 12px;
-    background: #2a2a2a;
-    border: 1px solid #333;
-    color: var(--text-color);
-    border-radius: 4px;
-    min-width: 150px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.filters input:focus,
-.filters select:focus {
-    border-color: var(--accent-color);
-    outline: none;
-}
-
- 
