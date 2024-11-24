@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andamo - Discover Your Next Adventure</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-content">
+            <h1>ANDAMO</h1>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <h1>Andamo</h1>
+        </div>
+        <div class="nav-search">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Discover places...">
+                <div id="autocomplete-list" class="autocomplete-items"></div>
+            </div>
+        </div>
+
+    </nav>
+
+    <main>
+        <section class="categories-section">
+            <div class="categories-scroll">
+                {% for category in ['Food', 'Drinks', 'Breakfast', 'Museum', 'Park', 'Shop', 'Beach'] %}
+                <div class="category-item" data-category="{{ category.lower() }}">
+                    <i class="fas fa-{{ category.lower() }}"></i>
+                    <span>{{ category }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="view-toggle">
+            <button id="showMapButton" class="btn-view active">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Map View</span>
+            </button>
+            <button id="showListButton" class="btn-view">
+                <i class="fas fa-list"></i>
+                <span>List View</span>
+            </button>
+        </section>
+
+        <section id="mapView" class="view-section">
+            <div id="map" class="map-container"></div>
+            <div class="places-slider">
+ 
+                    <section id="slider-section">
+                      <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                          <!-- Add your slider content here -->
+                        </div>
+                      </div>
+                    </section>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="listView" class="view-section hidden">
+            <div class="list-controls">
+                <input type="text" id="searchBox" placeholder="Filter locations..." class="search-filter">
+                <select id="sortSelect" class="sort-select">
+                    <option value="name">Sort by Name</option>
+                    <option value="distance">Sort by Distance</option>
+                </select>
+            </div>
+            <div id="locationList" class="locations-grid"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: <a href="mailto:alessandrocarli90@gmail.com">alessandrocarli90@gmail.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Settings</h3>
+                <div class="gsheet-settings">
+                    <input type="text" id="gsheet-id" placeholder="Enter Google Sheet ID">
+                    <button id="change-gsheet-id" class="btn-secondary">Update</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="module"></script>
+</body>
+</html>
