@@ -1,7 +1,34 @@
 let map;
 let markers = [];
 let locations = [];
+const iconConfig = {
+    Food: "red",
+    Drinks: "green",
+    Breakfast: "yellow",
+    Museum: "blue",
+    Park: "orange",
+    Shop: "grey",
+    Beach: "violet",
+};
 
+const createIcon = (color) => {
+    return L.icon({
+        iconUrl: `https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-${color}.png`,
+        shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+        iconSize: [25, 40],
+        iconAnchor: [24, 82],
+    });
+};
+
+const icons = {};
+for (const [type, color] of Object.entries(iconConfig)) {
+    icons[type] = createIcon(color);
+}
+
+// Function to get the marker icon based on the location type
+function getMarkerIcon(type) {
+    return icons[type] || createIcon('gray'); // Use a default 'gray' icon if the type is not found
+}
 async function fetchLocations() {
     try {
         const response = await fetch('/api/locations');
@@ -89,10 +116,6 @@ function filterLocations(searchText = '', city = '', type = '') {
         return matchSearch && matchCity && matchType;
     });
 }
-
-
-
-
 function updateMap(searchText = '', city = '', type = '') {
     // Clear existing markers
     markers.forEach(marker => marker.remove());
@@ -104,12 +127,13 @@ function updateMap(searchText = '', city = '', type = '') {
         const bounds = L.latLngBounds(filteredLocations.map(location => [location.latitude, location.longitude]));
 
         filteredLocations.forEach(location => {
-            const marker = L.marker([location.latitude, location.longitude])
+            const markerIcon = getMarkerIcon(location.type); // Get the icon based on the location type
+
+            const leafletMarker = L.marker([location.latitude, location.longitude], { icon: markerIcon })
                 .bindPopup(createPopupContent(location))
                 .addTo(map);
 
-            marker.on('click', () => showLocationDetails(location));
-            markers.push(marker);
+            markers.push(leafletMarker); // Store the Leaflet marker in the markers array
         });
 
         map.fitBounds(bounds.pad(0.2)); // Adjust padding for better fit
@@ -117,7 +141,6 @@ function updateMap(searchText = '', city = '', type = '') {
         map.setView([0, 0], 2); // Default view if no locations match
     }
 }
-
 
 
 function updateList(searchText = '', city = '', type = '') {
@@ -136,7 +159,6 @@ function updateList(searchText = '', city = '', type = '') {
     locationsList.style.overflowY = 'auto';
     locationsList.style.maxHeight = '500px'; // You can adjust the height as needed
 }
-
 function createPopupContent(location) {
     return `
         <div class="popup-content">

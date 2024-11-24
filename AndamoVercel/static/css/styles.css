@@ -13,7 +13,9 @@
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    
 }
+
 
 body {
     display: flex;
@@ -25,7 +27,7 @@ body {
 
 .main-nav, .filters {
     position: fixed;
-    width: 100%;
+        width: 100%;
     padding: 0 2rem;
     backdrop-filter: blur(10px);
     z-index: 999;
@@ -195,3 +197,6 @@ body {
         backdrop-filter: blur(10px);
     }
 }
+.logo {font-family: 'Faster One', cursive;
+    font-family: 'Bungee Shade', cursive;
+    color: #ffffff; }

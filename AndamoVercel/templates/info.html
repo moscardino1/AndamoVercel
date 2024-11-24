@@ -3,27 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How It Works</title>
+    <title>How It Works - ANDAMO Website</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold text-center mb-4">How It Works</h1>
+        
+        <!-- Overview Section -->
         <div class="mb-4">
-            <h2 class="text-xl font-semibold">Overview</h2>
-            <p>description of the app</p>
+            <h2 class="text-xl font-semibold">Introduction</h2>
+            <p>
+                This web application is designed to display points of interest from a Google Sheet on a map and in a list view. 
+                Users can search for locations, filter by city and category, and sort the results. The application also allows 
+                users to view additional details about each location, including images, descriptions, and distances from their 
+                current location.
+            </p>
         </div>
+
+        <!-- Features Section -->
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold">Features</h2>
+            <ul class="list-disc pl-5">
+                <li><strong>Map View:</strong> Display points of interest on an interactive map using Leaflet.</li>
+                <li><strong>List View:</strong> View a list of points of interest with details like name, address, and description.</li>
+                <li><strong>Search:</strong> Search for locations by name or address.</li>
+                <li><strong>Filter:</strong> Filter locations by city and category.</li>
+                <li><strong>Sort:</strong> Sort locations by name or distance from the user's current location.</li>
+                <li><strong>Responsive Design:</strong> The application is designed to work on various devices, including desktop and mobile.</li>
+            </ul>
+        </div>
+
+        <!-- Getting Started Section -->
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold">Getting Started</h2>
+            <h3 class="font-semibold">Prerequisites</h3>
+            <ul class="list-disc pl-5">
+                <li><strong>Google Sheet:</strong> The application relies on Google Sheets as the data source. Ensure that the Google Sheet is properly configured with the required columns:
+                    <ul class="list-inside list-disc pl-5">
+                        <li>name</li>
+                        <li>address</li>
+                        <li>city</li>
+                        <li>type</li>
+                        <li>description</li>
+                        <li>latitude</li>
+                        <li>longitude</li>
+                        <li>image</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- APIs Section -->
         <div class="mb-4">
             <h2 class="text-xl font-semibold">APIs Used</h2>
             <ul class="list-disc pl-5">
-                <li><strong> API:</strong> Used to fetch data.</li>
+                <li><strong>Google Sheets API:</strong> Fetch data from a <a href="https://docs.google.com/spreadsheets/d/18qq79HtX5uFhIRPC2jgV_j9nGfH3CcFR5Pj5-RW9k4A/edit?pli=1&gid=678788904#gid=678788904" class="text-blue-500">Google Sheet </a> that stores the points of interest, including their details. href</li>
+
+                <li><strong>Leaflet API:</strong> Used for rendering the interactive map where points of interest are displayed.</li>
             </ul>
         </div>
+
+        <!-- Legal Considerations Section -->
         <div class="mb-4">
             <h2 class="text-xl font-semibold">Legal Considerations</h2>
-            <p>All API usage complies with the respective terms of service.</p>
+            <p>All API usage complies with the respective terms of service of the APIs used. Please ensure that your use case complies with the licenses of the data and APIs utilized in this application.</p>
+        </div>
+
+        <!-- Credits Section -->
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold">Credits</h2>
+            <p><strong>Leaflet:</strong> [Leaflet](https://leafletjs.com/) is used for the interactive map that displays points of interest.</p>
+        </div>
+
+        <!-- License Section -->
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold">License</h2>
+            <p>This project is licensed under the MIT License.</p>
         </div>
     </div>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      </script>
+      <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

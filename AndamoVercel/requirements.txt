@@ -3,3 +3,4 @@ python-dotenv
 qrcode
 requests
 pillow
+pandas
