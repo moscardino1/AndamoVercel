@@ -83,16 +83,6 @@ def get_locations():
             "message": str(e)
         }), 500
 
-@app.before_request
-def log_request_info():
-    logger.debug('Headers: %s', request.headers)
-    logger.debug('Body: %s', request.get_data())
-
-@app.after_request
-def log_response_info(response):
-    logger.debug('Response Status: %s', response.status)
-    logger.debug('Response Headers: %s', response.headers)
-    return response
 
 if __name__ == '__main__':
     logger.info("Starting application")

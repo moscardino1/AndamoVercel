@@ -6,7 +6,7 @@ async function fetchLocations() {
     try {
         const response = await fetch('/api/locations');
         const result = await response.json();
-        
+
         if (result.status === 'success' && Array.isArray(result.data)) {
             locations = result.data;
             console.log('Fetched locations:', locations);
@@ -14,14 +14,14 @@ async function fetchLocations() {
             console.warn('Invalid data format received:', result);
             locations = [];
         }
-        
+
         updateMap();
         updateList();
-        setupFilters(); // Changed from initializeFilters
+        setupFilters();
     } catch (error) {
         console.error('Error fetching locations:', error);
         locations = [];
-        
+
         const locationsList = document.getElementById('locationsList');
         if (locationsList) {
             locationsList.innerHTML = `
@@ -74,14 +74,14 @@ function updateFilters() {
     const searchText = document.getElementById('searchInput').value;
     const city = document.getElementById('cityFilter').value;
     const type = document.getElementById('typeFilter').value;
-    
+
     updateMap(searchText, city, type);
     updateList(searchText, city, type);
 }
 
 function filterLocations(searchText = '', city = '', type = '') {
     return locations.filter(location => {
-        const matchSearch = !searchText || 
+        const matchSearch = !searchText ||
             location.name.toLowerCase().includes(searchText.toLowerCase()) ||
             location.description.toLowerCase().includes(searchText.toLowerCase());
         const matchCity = !city || location.city === city;
@@ -90,33 +90,40 @@ function filterLocations(searchText = '', city = '', type = '') {
     });
 }
 
+
+
+
 function updateMap(searchText = '', city = '', type = '') {
     // Clear existing markers
     markers.forEach(marker => marker.remove());
     markers = [];
-    
-    const filteredLocations = filterLocations(searchText, city, type);
-    
-    filteredLocations.forEach(location => {
-        const marker = L.marker([location.latitude, location.longitude])
-            .bindPopup(createPopupContent(location))
-            .addTo(map);
-            
-        marker.on('click', () => showLocationDetails(location));
-        markers.push(marker);
-    });
 
-    if (markers.length > 0) {
-        const group = new L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.1));
+    const filteredLocations = filterLocations(searchText, city, type);
+
+    if (filteredLocations.length > 0) {
+        const bounds = L.latLngBounds(filteredLocations.map(location => [location.latitude, location.longitude]));
+
+        filteredLocations.forEach(location => {
+            const marker = L.marker([location.latitude, location.longitude])
+                .bindPopup(createPopupContent(location))
+                .addTo(map);
+
+            marker.on('click', () => showLocationDetails(location));
+            markers.push(marker);
+        });
+
+        map.fitBounds(bounds.pad(0.2)); // Adjust padding for better fit
+    } else {
+        map.setView([0, 0], 2); // Default view if no locations match
     }
-    
 }
+
+
 
 function updateList(searchText = '', city = '', type = '') {
     const locationsList = document.getElementById('locationsList');
     const filteredLocations = filterLocations(searchText, city, type);
-    
+
     locationsList.innerHTML = filteredLocations.map(location => `
         <div class="location-card" onclick="showLocationDetails(${JSON.stringify(location).replace(/"/g, '&quot;')})">
             <h3>${location.name}</h3>
@@ -124,6 +131,10 @@ function updateList(searchText = '', city = '', type = '') {
             <p class="location-type">${location.type}</p>
         </div>
     `).join('');
+
+    // Ensure the list is scrollable
+    locationsList.style.overflowY = 'auto';
+    locationsList.style.maxHeight = '500px'; // You can adjust the height as needed
 }
 
 function createPopupContent(location) {
@@ -142,7 +153,7 @@ function createPopupContent(location) {
 function showLocationDetails(location) {
     const modal = document.getElementById('locationModal');
     const modalContent = document.getElementById('modalContent');
-    
+
     modalContent.innerHTML = `
         <h2>${location.name}</h2>
         <p><strong>Address:</strong> ${location.address}</p>
@@ -150,14 +161,14 @@ function showLocationDetails(location) {
         <p><strong>Description:</strong> ${location.description}</p>
         ${location.image ? `<img src="${location.image}" alt="${location.name}" class="modal-image">` : ''}
     `;
-    
+
     modal.style.display = 'block';
 }
 
 // Initialize map when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize the map
-    map = L.map('map').setView([43.7696, 11.2558], 13);
+    map = L.map('map');
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);

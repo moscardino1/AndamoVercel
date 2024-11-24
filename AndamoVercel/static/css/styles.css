@@ -53,8 +53,11 @@ body {
     backdrop-filter: blur(10px);
     z-index: 999;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
 
 .filters input,
@@ -65,6 +68,8 @@ body {
     color: var(--text-color);
     border-radius: 4px;
     min-width: 150px;
+    max-width: 300px;
+    box-sizing: border-box;
 }
 
 .filters input:focus,
@@ -72,7 +77,6 @@ body {
     border-color: var(--accent-color);
     outline: none;
 }
-
 
 .location-card {
     background: var(--primary-color);
@@ -159,6 +163,11 @@ body {
     padding: 1rem;
     background-color: var(--primary-color);
     text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--footer-height);
 }
 
 .footer-link {
@@ -167,42 +176,91 @@ body {
     margin: 0 0.5rem;
 }
 
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--footer-height); /* Adjust this value to the height of your footer */
-    padding: 1rem;
-    background-color: var(--primary-color);
-    text-align: center;
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--content-padding);
+    height: calc(100vh - var(--nav-height) - var(--filters-height) - var(--footer-height));
+    padding: var(--content-padding);
 }
 
+#map {
+    height: 50vh;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.locations-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 1rem;
+    margin-top: 20px;
+}
+
+@supports (--css: variables) {
+    .main-nav, .filters {
+        backdrop-filter: blur(10px);
+    }
+}
 
 .content {
-    position: fixed;
-    top: calc(var(--nav-height) + var(--filters-height));
-    left: 0;
-    right: 0;
-    bottom: calc(var(--footer-height));
-    display: grid;
-    grid-template-columns: 70% 30%;
+    margin-top: calc(var(--nav-height) + var(--filters-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     gap: var(--content-padding);
     padding: var(--content-padding);
     height: calc(100vh - var(--nav-height) - var(--filters-height) - var(--footer-height));
 }
 
 #map {
-    height: 100%;
+    height: 50vh;
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
 }
 
-#locationsList {
-    height: 100%;
+.locations-list {
+    max-height: 500px;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) var(--primary-color);
+    padding: 1rem;
+    margin-top: 20px;
 }
+
+/* Updated filter section for responsiveness */
+.filters {
+    position: fixed;
+    top: var(--nav-height);
+    width: 100%;
+    height: var(--filters-height);
+    padding: 0 2rem;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.filters input,
+.filters select {
+    padding: 8px 12px;
+    background: #2a2a2a;
+    border: 1px solid #333;
+    color: var(--text-color);
+    border-radius: 4px;
+    min-width: 150px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+ 
