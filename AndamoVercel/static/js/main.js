@@ -11,14 +11,18 @@ const iconConfig = {
     Beach: "violet",
 };
 
-const createIcon = (color) => {
+// Updated marker icon configuration
+function createIcon(color) {
     return L.icon({
         iconUrl: `https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-${color}.png`,
         shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-        iconSize: [25, 40],
-        iconAnchor: [24, 82],
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
     });
-};
+}
+
 
 const icons = {};
 for (const [type, color] of Object.entries(iconConfig)) {
@@ -27,7 +31,7 @@ for (const [type, color] of Object.entries(iconConfig)) {
 
 // Function to get the marker icon based on the location type
 function getMarkerIcon(type) {
-    return icons[type] || createIcon('gray'); // Use a default 'gray' icon if the type is not found
+    return icons[type] || createIcon('black'); // Use a default 'gray' icon if the type is not found
 }
 async function fetchLocations() {
     try {
@@ -142,50 +146,63 @@ function updateMap(searchText = '', city = '', type = '') {
     }
 }
 
-
+// Function to focus on a location
+function focusLocation(lat, lng) {
+    map.setView([lat, lng], 16);
+    // Find and open the corresponding marker's popup
+    markers.forEach(marker => {
+        if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
+            setTimeout(() => {
+                marker.openPopup();
+            }, 1);
+                    }
+    });
+}
+// Updated list content creation
 function updateList(searchText = '', city = '', type = '') {
     const locationsList = document.getElementById('locationsList');
     const filteredLocations = filterLocations(searchText, city, type);
 
     locationsList.innerHTML = filteredLocations.map(location => `
-        <div class="location-card" onclick="showLocationDetails(${JSON.stringify(location).replace(/"/g, '&quot;')})">
-            <h3>${location.name}</h3>
-            <p>${location.address}</p>
-            <p class="location-type">${location.type}</p>
+        <div class="location-card">
+            <div class="location-image">
+                ${location.image ? 
+                    `<img src="${location.image}" alt="${location.name}">` : 
+                    `<div class="placeholder-image"><i class="fa fa-picture-o"></i></div>`
+                }
+            </div>
+            <div class="location-info">
+                <h3 class="location-name" onclick="focusLocation(${location.latitude}, ${location.longitude})">${location.name}</h3>
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}" 
+                   class="location-address" target="_blank" rel="noopener noreferrer">
+                    ${location.address}
+                </a>
+                <p class="location-type">${location.type}</p>
+            </div>
         </div>
     `).join('');
-
-    // Ensure the list is scrollable
-    locationsList.style.overflowY = 'auto';
-    locationsList.style.maxHeight = '500px'; // You can adjust the height as needed
 }
+
+
+
+// Updated popup content creation
 function createPopupContent(location) {
     return `
         <div class="popup-content">
-            <h3>${location.name}</h3>
-            <p>${location.address}</p>
-            <p><strong>${location.type}</strong></p>
-            <button onclick='showLocationDetails(${JSON.stringify(location).replace(/"/g, '&quot;')})'>
-                More Details
-            </button>
+            ${location.image ? `<img src="${location.image}" alt="${location.name}" class="popup-image">` : ''}
+            <h3>${location.name.replace(/'/g, "&#39;")}</h3>
+            <p class="popup-address">
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}" 
+                   target="_blank" rel="noopener noreferrer">
+                    ${location.address}
+                </a>
+            </p>
+            <p class="popup-type"><strong>${location.type}</strong></p>
+            <p class="popup-description">${location.description}</p>
         </div>
     `;
 }
-
-function showLocationDetails(location) {
-    const modal = document.getElementById('locationModal');
-    const modalContent = document.getElementById('modalContent');
-
-    modalContent.innerHTML = `
-        <h2>${location.name}</h2>
-        <p><strong>Address:</strong> ${location.address}</p>
-        <p><strong>Type:</strong> ${location.type}</p>
-        <p><strong>Description:</strong> ${location.description}</p>
-        ${location.image ? `<img src="${location.image}" alt="${location.name}" class="modal-image">` : ''}
-    `;
-
-    modal.style.display = 'block';
-}
+ 
 
 // Initialize map when the page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -195,18 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Close modal when clicking the close button
-    document.querySelector('.close').addEventListener('click', () => {
-        document.getElementById('locationModal').style.display = 'none';
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (event) => {
-        const modal = document.getElementById('locationModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
+ 
 
     // Fetch locations data
     fetchLocations();

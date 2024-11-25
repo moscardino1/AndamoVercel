@@ -1,0 +1,146 @@
+/* filters */
+
+/* Modern filter styles */
+.filters {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2rem;
+}
+
+.filter-group {
+    position: relative;
+    flex: 1;
+}
+
+/* Modern select styling */
+.filters select {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    font-size: 0.95rem;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.filters select:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.filters select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.1);
+}
+
+/* Style the select options */
+.filters select option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 12px;
+}
+
+/* For Firefox */
+.filters select {
+    -moz-appearance: none;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* For Chrome/Safari */
+.filters select::-ms-expand {
+    display: none;
+}
+
+/* Style for select when open */
+.filters select:active,
+.filters select:focus {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Custom dropdown arrow */
+.filter-group::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+}
+
+.filter-group:hover::after {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Search input styling to match selects */
+.filters input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.filters input[type="text"]:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.filters input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.1);
+}
+
+/* Placeholder styling */
+.filters input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Additional styles for dropdown options */
+.filters select option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 12px;
+}
+
+/* Style for option hover (works in Firefox) */
+.filters select option:hover,
+.filters select option:focus,
+.filters select option:active,
+.filters select option:checked {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* Remove default focus outline in Firefox */
+.filters select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #ffffff;
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.filters select::-webkit-listbox {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.filters select::-webkit-list {
+    background-color: #1a1a1a;
+}

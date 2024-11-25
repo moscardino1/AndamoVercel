@@ -1,3 +1,4 @@
+/* styles */
 :root {
     --primary-color: #1a1a1a;
     --accent-color: #ff3366;
@@ -200,3 +201,104 @@ body {
 .logo {font-family: 'Faster One', cursive;
     font-family: 'Bungee Shade', cursive;
     color: #ffffff; }
+
+    /* Updated styles for the filters */
+.filters select {
+    appearance: none;
+    background: #2a2a2a url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 8px center;
+    padding-right: 36px;
+}
+
+/* Updated location card styles */
+.location-card {
+    display: flex;
+    gap: 1rem;
+    background: var(--primary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.location-image {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.location-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    background: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.location-info {
+    flex-grow: 1;
+}
+
+.location-name {
+    color: var(--accent-color);
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.location-name:hover {
+    text-decoration: underline;
+}
+
+.location-address {
+    color: #888;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.location-address:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Updated popup styles */
+.popup-content {
+    max-width: 300px;
+}
+
+.popup-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.popup-address {
+    margin: 0.5rem 0;
+}
+
+.popup-address a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.popup-address a:hover {
+    text-decoration: underline;
+}
+
+.popup-description {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
