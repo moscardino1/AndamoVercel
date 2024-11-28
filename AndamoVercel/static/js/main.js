@@ -1,3 +1,4 @@
+
 let map;
 let markers = [];
 let locations = [];
@@ -148,7 +149,7 @@ function updateMap(searchText = '', city = '', type = '') {
 
 // Function to focus on a location
 function focusLocation(lat, lng) {
-    map.setView([lat, lng], 16);
+    map.setView([lat, lng], 20);
     // Find and open the corresponding marker's popup
     markers.forEach(marker => {
         if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
@@ -216,4 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch locations data
     fetchLocations();
+    
+
+            
+    
 });

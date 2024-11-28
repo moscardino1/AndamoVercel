@@ -95,56 +95,7 @@ body {
     color: #888;
     font-size: 0.9rem;
 }
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 2000;
-    display: none;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--primary-color);
-    padding: 2rem;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-.close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    color: var(--text-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.close:hover {
-    color: var(--accent-color);
-}
-
-.modal-image {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 1rem;
-}
-
+ 
 .error-message {
     background: rgba(255, 51, 51, 0.1);
     border-left: 4px solid var(--accent-color);
@@ -272,7 +223,14 @@ body {
 
 /* Updated popup styles */
 .popup-content {
-    max-width: 300px;
+    max-width: 200px;
+}
+.leaflet-popup-content p {
+    margin: 0px;
+}
+
+.leaflet-popup-content {
+    max-width: 200px; /* Adjust as needed */
 }
 
 .popup-image {
@@ -297,8 +255,12 @@ body {
 }
 
 .popup-description {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+    margin-top: 0.6rem;
+    font-size: 0.6rem;
     line-height: 1.4;
 }
 
+.leaflet-container {
+    pointer-events: auto;
+    touch-action: auto; /* Ensure touch interactions */
+} 
