@@ -264,3 +264,8 @@ body {
     pointer-events: auto;
     touch-action: auto; /* Ensure touch interactions */
 } 
+
+.location-card.highlighted {
+    border: 2px solid #007bff;
+    background-color: #f0f8ff;
+}

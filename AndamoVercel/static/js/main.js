@@ -133,19 +133,41 @@ function updateMap(searchText = '', city = '', type = '') {
 
         filteredLocations.forEach(location => {
             const markerIcon = getMarkerIcon(location.type); // Get the icon based on the location type
-
+        
             const leafletMarker = L.marker([location.latitude, location.longitude], { icon: markerIcon })
                 .bindPopup(createPopupContent(location))
                 .addTo(map);
-
+        
+            // Ensure popups work on marker click
+            leafletMarker.on('click', () => {
+                leafletMarker.openPopup();
+                highlightListItem(location.address); // Ensure the corresponding list item is highlighted
+            });
+        
             markers.push(leafletMarker); // Store the Leaflet marker in the markers array
         });
+        
 
         map.fitBounds(bounds.pad(0.2)); // Adjust padding for better fit
     } else {
         map.setView([0, 0], 2); // Default view if no locations match
     }
 }
+
+function highlightListItem(locationId) {
+    const listItem = document.querySelector(`[data-id="${locationId}"]`);
+    if (listItem) {
+        // Remove highlight from all list items
+        document.querySelectorAll('.location-card').forEach(item => item.classList.remove('highlighted'));
+
+        // Highlight the current list item
+        listItem.classList.add('highlighted');
+
+        // Scroll to the list item
+        listItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
 
 // Function to focus on a location
 function focusLocation(lat, lng) {
@@ -165,7 +187,7 @@ function updateList(searchText = '', city = '', type = '') {
     const filteredLocations = filterLocations(searchText, city, type);
 
     locationsList.innerHTML = filteredLocations.map(location => `
-        <div class="location-card">
+        <div class="location-card" data-id="${location.address}">
             <div class="location-image">
                 ${location.image ? 
                     `<img src="${location.image}" alt="${location.name}">` : 
@@ -182,6 +204,7 @@ function updateList(searchText = '', city = '', type = '') {
             </div>
         </div>
     `).join('');
+    
 }
 
 
